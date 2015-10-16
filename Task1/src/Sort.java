@@ -1,23 +1,22 @@
-/**
- * Created by Андрей on 16.10.2015.
- */
-public class Main {
+import static java.lang.System.out;
+
+public class Sort {
     public static void main(String[] args) {
        // double[] dArray = {3.8,3.1,0.56,5,6,8,9,1};
         double[] dInputArr = parseString(args);
         sort(dInputArr);
         printArray(dInputArr);
     }
-    public static void sort (double[] dArray) {
+    public static void sort (double[] arr) {
         int i = 0;
         int j = 0;
-        for (i = 1; i < dArray.length; i++) {
-            double dTmp = dArray[i];
+        for (i = 1; i < arr.length; i++) {
+            double dTmp = arr[i];
             for (j = i - 1; j >= 0; j--) {
-                if (dArray[j] < dTmp)
+                if (arr[j] < dTmp)
                     break;
-                dArray[j + 1] = dArray[j];
-                dArray[j] = dTmp;
+                arr[j + 1] = arr[j];
+                arr[j] = dTmp;
             }
         }
     }
