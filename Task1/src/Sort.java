@@ -2,7 +2,6 @@ import static java.lang.System.out;
 
 public class Sort {
     public static void main(String[] args) {
-       // double[] dArray = {3.8,3.1,0.56,5,6,8,9,1};
         double[] dInputArr = parseString(args);
         sort(dInputArr);
         printArray(dInputArr);
