@@ -22,11 +22,11 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <processorPath useClasspath="true" />
-        <module name="Insert_sort" />
+        <module name="sort_test" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="Insert_sort" target="1.5" />
+      <module name="sort_test" target="1.5" />
     </bytecodeTargetLevel>
   </component>
 </project>
