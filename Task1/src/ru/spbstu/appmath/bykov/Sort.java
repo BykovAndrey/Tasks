@@ -1,7 +1,6 @@
 package ru.spbstu.appmath.bykov;
 
 public class Sort {
-
     public static void main(String[] args) {
         double[] dInputArr = parseString(args);
         sort(dInputArr);
@@ -9,7 +8,6 @@ public class Sort {
     }
 
     public static void sort(double[] arr) {
-
         for (int i = 1; i < arr.length; i++) {
             double dTmp = arr[i];
             for (int j = i - 1; j >= 0; j--) {
@@ -31,9 +29,8 @@ public class Sort {
     }
 
     public static void printArray(double arr[]) {
-
-        for (int i = 0; i < arr.length; ++i)
-            System.out.printf("%.1f ", arr[i]);
+        for (double elem : arr)
+            System.out.printf("%.1f ", elem);
         System.out.println();
     }
 }
