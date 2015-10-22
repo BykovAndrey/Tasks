@@ -30,7 +30,7 @@ public class Sort {
 
     public static void printArray(double arr[]) {
         for (double elem : arr)
-            System.out.printf("%.1f ", elem);
+            System.out.printf("%f ", elem);
         System.out.println();
     }
 }
