@@ -23,7 +23,6 @@ public class Sort {
     }
 
     public static double[] parseString(String[] input) {
-
         double result[] = new double[input.length];
         for (int i = 0; i < input.length; i++)
             result[i] = Double.parseDouble(input[i]);
@@ -33,6 +32,6 @@ public class Sort {
     public static void printArray(double arr[]) {
         for (double elem : arr)
             System.out.print(" " + elem);
-        System.out.println();
+                System.out.println();
     }
 }
