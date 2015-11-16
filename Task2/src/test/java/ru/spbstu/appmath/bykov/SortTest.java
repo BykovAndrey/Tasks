@@ -49,31 +49,44 @@ public class SortTest <T> {
 
     private static <T> boolean hasEachElementOf(T[] input, T[] result) {
         for (T element : input) {
-            boolean IsOk = false;
             for (int j = 0; j < result.length; j++) {
-                if (element.equals(result[j])) {
-                    IsOk = true;
-                }
-                if (element.equals(input[j])) {
-                    IsOk = false;
-                }
+                if (result[j] == element)
+                    break;
+                if (j == result.length - 1)
+                    return false;
             }
-            if(!IsOk)
-                return false;
         }
         return true;
     }
-    private static final Object[][] TEST_DATA = {
-            {QUICK_SORT, new Double[]{1.1234, 0.123455, 3.0},DOUBLE_COMPARATOR_FIRST},
-            {INSERTION_SORT, new Double[]{3.0, 2.0, 1.0},DOUBLE_COMPARATOR_FIRST},
-            {QUICK_SORT, new Double[]{33.0, 11.0, 111.0},DOUBLE_COMPARATOR_FIRST},
-            {INSERTION_SORT, new Double[]{-131., 2524., 23., -352.5},DOUBLE_COMPARATOR_FIRST},
 
-            {INSERTION_SORT, new Human[]{new Human("Andrey",32), new Human ("Alexander",24), new Human ("Leonid",14),
-                    new Human ("Ivankov",103)},HUMAN_COMPARATOR_NAME},
-            {INSERTION_SORT, new Human[]{new Human("Vasiliy",3), new Human ("Alexander",1), new Human ("Nikolay",2),
-                    new Human ("Ivankov",103)},HUMAN_COMPARATOR_NAME},
-            {INSERTION_SORT, new Human[]{new Human("Viktoria",32), new Human ("Vera",24), new Human ("Michael",14),
+//    private static <T> boolean hasEachElementOf(T[] input, T[] result) {
+//        for (T element : input) {
+//            boolean IsRes = false;
+//            boolean IsInp = false;
+//            for (int j = 0; j < result.length; j++) {
+//                if (element.equals(result[j])) {
+//                    IsRes = true;
+//                }
+//                if (element.equals(input[j])) {
+//                    IsInp = true;
+//                }
+//            }
+//            if(!IsOk)
+//                return false;
+//        }
+//        return true;
+//    }
+    private static final Object[][] TEST_DATA = {
+            {QUICK_SORT, new Double[]{1.1234, 0.123455, 3.0},DOUBLE_COMPARATOR_FIRST},//0
+            {INSERTION_SORT, new Double[]{3.0, 2.0, 1.0},DOUBLE_COMPARATOR_FIRST},//1
+            {QUICK_SORT, new Double[]{33.0, 11.0, 111.0},DOUBLE_COMPARATOR_FIRST},//2
+            {QUICK_SORT, new Double[]{131.4, 224.0, 23.0, 352.5},DOUBLE_COMPARATOR_FIRST},//3
+
+            {QUICK_SORT, new Human[]{new Human("Andrey",19), new Human ("Alexander",24), new Human ("Leonid",14),//4
+                    new Human ("Ivankov",103)},HUMAN_COMPARATOR_AGE},
+            {INSERTION_SORT, new Human[]{new Human("Vasiliy",3), new Human ("Alexander",1), new Human ("Nikolay",2),//5
+                    new Human ("Ivankov",103)},HUMAN_COMPARATOR_AGE},
+            {INSERTION_SORT, new Human[]{new Human("Viktoria",32), new Human ("Vera",24), new Human ("Michael",14),//6
                     new Human ("Ivankov",103)},HUMAN_COMPARATOR_NAME}
     };
 
