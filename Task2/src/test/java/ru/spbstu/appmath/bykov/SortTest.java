@@ -5,7 +5,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 
-import java.time.chrono.IsoChronology;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Comparator;
@@ -39,46 +38,10 @@ public class SortTest <T> {
             return tmp.compareTo(o2.getAge());
         }
     };
-    private static final Object[][] TEST_DATA = {
-            {INSERTION_SORT, new Double[]{1.1234, 0.123455, 3.0}},
-            {INSERTION_SORT, new Double[]{3.0, 2.0, 1.0}},
-            {INSERTION_SORT, new Double[]{1., 1., 1.}},
-            {INSERTION_SORT, new Double[]{-131., 2524., 23., -352.5}},
-    };
-
-    @Parameterized.Parameters
-    public static Collection<Object[]> testData() {
-        return Arrays.asList(TEST_DATA);
-    }
-
-    private Sort<T> sort;
-    private T[] input;
-
-    public SortTest(Sort<T> sort, T[] input, Comparator<T> comparator) {
-        this.sort = sort;
-        this.input = input;
-        this.comparator = comparator;
-    }
-
-    @Test
-    public void test() {
-        T[] result = sort.sort(input, (Comparator<T>) DOUBLE_COMPARATOR_FIRST);
-        Assert.assertTrue(testAscendingOrder(result));
-        Assert.assertEquals("Result array length should be equal to original", input.length, result.length);
-        Assert.assertTrue(hasEachElementOf(input, result));
-    }
 
     private static <T> boolean testAscendingOrder(T[] array, Comparator<T> comparator) {
         for (int i = 0; i < array.length - 1; i++) {
             if (comparator.compare(array[i],array[i + 1]) >= 0)
-                return false;
-        }
-        return true;
-    }
-
-    private static <T> boolean testDescendingOrder(T[] array, Comparator<T> comparator ) {
-        for (int i = 0; i < array.length - 1; i++) {
-            if (comparator.compare(array[i],array[i+1]) <= 0)
                 return false;
         }
         return true;
@@ -99,5 +62,41 @@ public class SortTest <T> {
                 return false;
         }
         return true;
+    }
+    private static final Object[][] TEST_DATA = {
+            {QUICK_SORT, new Double[]{1.1234, 0.123455, 3.0},DOUBLE_COMPARATOR_FIRST},
+            {INSERTION_SORT, new Double[]{3.0, 2.0, 1.0},DOUBLE_COMPARATOR_FIRST},
+            {QUICK_SORT, new Double[]{33.0, 11.0, 111.0},DOUBLE_COMPARATOR_FIRST},
+            {INSERTION_SORT, new Double[]{-131., 2524., 23., -352.5},DOUBLE_COMPARATOR_FIRST},
+
+            {INSERTION_SORT, new Human[]{new Human("Andrey",32), new Human ("Alexander",24), new Human ("Leonid",14),
+                    new Human ("Ivankov",103)},HUMAN_COMPARATOR_NAME},
+            {INSERTION_SORT, new Human[]{new Human("Vasiliy",3), new Human ("Alexander",1), new Human ("Nikolay",2),
+                    new Human ("Ivankov",103)},HUMAN_COMPARATOR_NAME},
+            {INSERTION_SORT, new Human[]{new Human("Viktoria",32), new Human ("Vera",24), new Human ("Michael",14),
+                    new Human ("Ivankov",103)},HUMAN_COMPARATOR_NAME}
+    };
+
+    private Sort<T> sort;
+    private T[] input;
+    private final Comparator<T> comparator;
+
+    @Parameterized.Parameters
+    public static Collection<Object[]> testData() {
+        return Arrays.asList(TEST_DATA);
+    }
+
+    public SortTest(Sort<T> sort, T[] input, Comparator<T> comparator) {
+        this.sort = sort;
+        this.input = input;
+        this.comparator = comparator;
+    }
+
+    @Test
+    public void test() {
+        T[] result = sort.sort(input, (Comparator<T>) comparator);
+        Assert.assertTrue(testAscendingOrder(result,comparator));
+        Assert.assertEquals("Result array length should be equal to original", input.length, result.length);
+        Assert.assertTrue(hasEachElementOf(input, result));
     }
 }
