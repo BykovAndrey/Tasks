@@ -51,38 +51,46 @@ public class SortTest <T> {
     }
 
     private static <T> boolean hasEachElementOf(T[] input, T[] result) {
-        if(input.equals(result))
-            return false;
         for (T element : input) {
+            int counter = 0;
             for (int j = 0; j < result.length; j++) {
-                if (result[j] == element)
-                    break;
-                if (j == result.length - 1)
-                    return false;
+                if (element.equals(input[j]))
+                    counter--;
+                if (element.equals(result[j]))
+                    counter++;
             }
+            if(counter != 0)
+                return false;
         }
         return true;
     }
-    public static Double[] RandomDoubleData() {
+    public static Double[] randomDoubleData() {
         Random rand = new Random();
         Double[] data = new Double[(abs(rand.nextInt(100)) + 1)];
-        for(int i = 0; i < data.length; i++ ){
+        for(int i = 0; i < data.length; i++ )
             data[i] = rand.nextDouble();
-        }
+        return data;
+    }
+
+    public static Human[] randomHumanData() {
+        String[] names = new String[]{"andrey", "boris", "casey", "david", "egor", "fedor", "georgiy", "alexander", "igor", "felix", "kolyan"};
+        Random rand = new Random();
+        Human[] data = new Human[(abs(rand.nextInt(100)) + 1)];
+        for(int i = 0; i < data.length; i++ )
+            data[i] = new Human(names[rand.nextInt(names.length)], (rand.nextInt(99) + 1));
         return data;
     }
 
     private static final Object[][] TEST_DATA = {
-            {INSERTION_SORT, RandomDoubleData(),DOUBLE_COMPARATOR_FIRST},//0
-            {INSERTION_SORT, new Double[]{1.,1.,1.,1. },DOUBLE_COMPARATOR_SECOND},//1
-            {INSERTION_SORT, new Double[]{},DOUBLE_COMPARATOR_FIRST},//2
-            {INSERTION_SORT, new Double[]{131.4, 224.0, 23.0, 352.5},DOUBLE_COMPARATOR_SECOND},//3
-            {INSERTION_SORT, new Human[]{new Human("Andrey",19), new Human ("Alexander",24), new Human ("Leonid",14),//4
-                    new Human ("Ivankov",103)},HUMAN_COMPARATOR_AGE},
+            {INSERTION_SORT, randomDoubleData(), DOUBLE_COMPARATOR_FIRST},//0
+            {INSERTION_SORT, new Double[]{1.,1.,1.,1. }, DOUBLE_COMPARATOR_SECOND},//1
+            {INSERTION_SORT, new Double[]{}, DOUBLE_COMPARATOR_FIRST},//2
+            {INSERTION_SORT, new Double[]{131.4, 224.0, 23.0, 352.5}, DOUBLE_COMPARATOR_SECOND},//3
+            {INSERTION_SORT, randomHumanData(), HUMAN_COMPARATOR_AGE},
             {INSERTION_SORT, new Human[]{new Human("Vasiliy",3), new Human ("Alexander",1), new Human ("Nikolay",2),//5
-                    new Human ("Ivankov",103)},HUMAN_COMPARATOR_AGE},
+                    new Human ("Ivankov",103)}, HUMAN_COMPARATOR_AGE},
             {INSERTION_SORT, new Human[]{new Human("Viktoria",32), new Human ("Vera",24), new Human ("Michael",14),//6
-                    new Human ("Ivankov",103)},HUMAN_COMPARATOR_NAME}
+                    new Human ("Ivankov",103)}, HUMAN_COMPARATOR_NAME}
     };
 
     private Sort<T> sort;
