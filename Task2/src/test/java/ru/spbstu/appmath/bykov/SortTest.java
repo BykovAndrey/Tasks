@@ -9,6 +9,9 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Comparator;
 import java.lang.String;
+import java.util.Random;
+
+import static java.lang.Math.abs;
 
 @RunWith(Parameterized.class)
 public class SortTest <T> {
@@ -39,15 +42,17 @@ public class SortTest <T> {
         }
     };
 
-    private static <T> boolean testAscendingOrder(T[] array, Comparator<T> comparator) {
+    private static <T> boolean testOrder(T[] array, Comparator<T> comparator) {
         for (int i = 0; i < array.length - 1; i++) {
-            if (comparator.compare(array[i],array[i + 1]) >= 0)
+            if (comparator.compare(array[i],array[i + 1]) > 0)
                 return false;
         }
         return true;
     }
 
     private static <T> boolean hasEachElementOf(T[] input, T[] result) {
+        if(input.equals(result))
+            return false;
         for (T element : input) {
             for (int j = 0; j < result.length; j++) {
                 if (result[j] == element)
@@ -58,29 +63,20 @@ public class SortTest <T> {
         }
         return true;
     }
+    public static Double[] RandomDoubleData() {
+        Random rand = new Random();
+        Double[] data = new Double[(abs(rand.nextInt(100)) + 1)];
+        for(int i = 0; i < data.length; i++ ){
+            data[i] = rand.nextDouble();
+        }
+        return data;
+    }
 
-//    private static <T> boolean hasEachElementOf(T[] input, T[] result) {
-//        for (T element : input) {
-//            boolean IsRes = false;
-//            boolean IsInp = false;
-//            for (int j = 0; j < result.length; j++) {
-//                if (element.equals(result[j])) {
-//                    IsRes = true;
-//                }
-//                if (element.equals(input[j])) {
-//                    IsInp = true;
-//                }
-//            }
-//            if(!IsOk)
-//                return false;
-//        }
-//        return true;
-//    }
     private static final Object[][] TEST_DATA = {
-            {QUICK_SORT, new Double[]{1.1234, 0.123455, 3.0},DOUBLE_COMPARATOR_FIRST},//0
-            {INSERTION_SORT, new Double[]{3.0, 2.0, 1.0},DOUBLE_COMPARATOR_FIRST},//1
-            {INSERTION_SORT, new Double[]{33.0, 11.0, 111.0},DOUBLE_COMPARATOR_FIRST},//2
-            {INSERTION_SORT, new Double[]{131.4, 224.0, 23.0, 352.5},DOUBLE_COMPARATOR_FIRST},//3
+            {INSERTION_SORT, RandomDoubleData(),DOUBLE_COMPARATOR_FIRST},//0
+            {INSERTION_SORT, new Double[]{1.,1.,1.,1. },DOUBLE_COMPARATOR_SECOND},//1
+            {INSERTION_SORT, new Double[]{},DOUBLE_COMPARATOR_FIRST},//2
+            {INSERTION_SORT, new Double[]{131.4, 224.0, 23.0, 352.5},DOUBLE_COMPARATOR_SECOND},//3
             {INSERTION_SORT, new Human[]{new Human("Andrey",19), new Human ("Alexander",24), new Human ("Leonid",14),//4
                     new Human ("Ivankov",103)},HUMAN_COMPARATOR_AGE},
             {INSERTION_SORT, new Human[]{new Human("Vasiliy",3), new Human ("Alexander",1), new Human ("Nikolay",2),//5
@@ -107,7 +103,7 @@ public class SortTest <T> {
     @Test
     public void test() {
         T[] result = sort.sort(input, (Comparator<T>) comparator);
-        Assert.assertTrue(testAscendingOrder(result,comparator));
+        Assert.assertTrue(testOrder(result, comparator));
         Assert.assertEquals("Result array length should be equal to original", input.length, result.length);
         Assert.assertTrue(hasEachElementOf(input, result));
     }
