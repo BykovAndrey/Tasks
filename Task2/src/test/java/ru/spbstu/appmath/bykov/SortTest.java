@@ -23,11 +23,13 @@ public class SortTest <T> {
             return o1.compareTo(o2);
         }
     };
+
     private static final Comparator<Double> DOUBLE_COMPARATOR_SECOND = new Comparator<Double>() {
         public int compare(final Double o1, final Double o2) {
             return o2.compareTo(o1);
         }
     };
+
     private static final Comparator<Human> HUMAN_COMPARATOR_NAME = new Comparator<Human>() {
         public int compare(final Human h1, final Human h2) {
             String tmp = h1.getName();
@@ -64,6 +66,7 @@ public class SortTest <T> {
         }
         return true;
     }
+
     public static Double[] randomDoubleData() {
         Random rand = new Random();
         Double[] data = new Double[(abs(rand.nextInt(100)) + 1)];
@@ -71,7 +74,6 @@ public class SortTest <T> {
             data[i] = rand.nextDouble();
         return data;
     }
-
     public static Human[] randomHumanData() {
         String[] names = new String[]{"andrey", "boris", "casey", "david", "egor", "fedor", "georgiy", "alexander", "igor", "felix", "kolyan"};
         Random rand = new Random();
