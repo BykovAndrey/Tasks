@@ -11,7 +11,7 @@ public void main(String[] args) {
     }else if (args.length == 1) {
         var = 0;
     }else {
-        System.out.println("Argiments Error");
+        System.out.println("Arguments Error");
         return;
     }
 }
