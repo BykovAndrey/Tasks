@@ -1,8 +1,8 @@
-package ru.spbstu.appmath.bykov;
-
 /**
  * Created by Андрей on 25.01.2016.
  */
+package ru.spbstu.appmath.bykov;
+
 public class Composition implements Expression {
     private Expression left = null;
     private Expression right = null;
@@ -37,5 +37,5 @@ public class Composition implements Expression {
                 result = 0;
         }
         return result;
-        }
+    }
 }

@@ -1,7 +1,6 @@
 /**
- * Created by Андрей on 25.01.2016.
+ * Created by пїЅпїЅпїЅпїЅпїЅпїЅ on 25.01.2016.
  */
-
 package ru.spbstu.appmath.bykov;
 
 import org.junit.Assert;
@@ -25,7 +24,7 @@ public class TestCalcApp {
     };
 
     @Test
-    public void test() throws Exception{
+    public void test() throws Exception {
         for (int i = 0; i < 6; i++) {
             Expression f = p.parse((String) TEST_DATA[i][0]);
             Assert.assertEquals(f.calc(i), TEST_DATA[i][1]);
@@ -44,7 +43,6 @@ public class TestCalcApp {
         System.out.println(result);
     }
 
-
     @Test
     public void testException2() throws Exception {
         expectedException.expect(Exception.class);
@@ -53,6 +51,4 @@ public class TestCalcApp {
         double result = f.calc(3);
         System.out.println(result);
     }
-
-
 }

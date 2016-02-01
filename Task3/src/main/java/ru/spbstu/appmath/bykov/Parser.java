@@ -4,7 +4,7 @@ package ru.spbstu.appmath.bykov;
  * Created by Андрей on 25.01.2016.
  */
 public class Parser {
-    public Expression parse(String s) throws Exception{
+    public Expression parse(String s) throws Exception {
         String trimStr = s.trim();
 
         int additionPos = findPosOperator(trimStr, '+');
