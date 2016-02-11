@@ -5,6 +5,7 @@ package ru.spbstu.appmath.bykov;
 
 public class Const implements Expression {
     private double val = 0;
+
     public Const(double value) {
         this.val = value;
     }

@@ -4,7 +4,7 @@
 package ru.spbstu.appmath.bykov;
 
 public class Var implements Expression {
-    public double calc(double var) {
-        return var;
+    public double calc(final double x) {
+        return x;
     }
 }

@@ -12,7 +12,7 @@ import org.junit.rules.ExpectedException;
 public class TestCalcApp {
     private Parser p = new Parser();
 
-    private static Object[][] TEST_DATA = {
+    private static final Object[][] TEST_DATA = {
             {"x",0.0},
             {"(5 + x) / x",6.0},
             {"x - 4.32 + 5 * (-1.9 + x)",17.18},

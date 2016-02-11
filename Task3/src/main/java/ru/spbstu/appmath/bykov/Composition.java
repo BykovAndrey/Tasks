@@ -15,23 +15,23 @@ public class Composition implements Expression {
     }
 
     public double calc(double x) throws Exception {
-        double result_l = this.left.calc(x);
-        double result_r = this.right.calc(x);
+        double resultL = this.left.calc(x);
+        double resultR = this.right.calc(x);
         double result;
         switch (this.operation) {
             case '+':
-                result = result_l + result_r;
+                result = resultL + resultR;
                 break;
             case '-':
-                result = result_l - result_r;
+                result = resultL - resultR;
                 break;
             case '*':
-                result = result_l * result_r;
+                result = resultL * resultR;
                 break;
             case '/':
-                if (result_r == 0)
+                if (resultR == 0)
                     throw new Exception("Calculation error");
-                result = result_l / result_r;
+                result = resultL / resultR;
                 break;
             default:
                 result = 0;

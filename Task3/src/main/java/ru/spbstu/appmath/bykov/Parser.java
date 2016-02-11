@@ -1,46 +1,54 @@
-package ru.spbstu.appmath.bykov;
-
 /**
  * Created by Андрей on 25.01.2016.
  */
+package ru.spbstu.appmath.bykov;
+
 public class Parser {
-    public Expression parse(String s) throws Exception {
-        String trimStr = s.trim();
+    public Expression parse(final String s) throws Exception {
+        final String trimmed = s.trim();
 
-        int additionPos = findPosOperator(trimStr, '+');
-        int substractionPos = findPosOperator(trimStr, '-');
-        if (additionPos != -1 && (substractionPos == -1 || additionPos <  substractionPos)) {
-            return new Composition(parse(trimStr.substring(0, additionPos)), parse(trimStr.substring(additionPos + 1)), '+');
-        } else if (substractionPos != -1) {
-            return new Composition(parse(trimStr.substring(0, substractionPos)), parse(trimStr.substring(substractionPos + 1)), '-');
+        int plusPos = findPosOperator(trimmed, '+');
+        int minusPos = findPosOperator(trimmed, '-');
+        if (plusPos != -1) {
+            if (trimmed.substring(0, plusPos).equals("") || trimmed.substring(plusPos + 1).equals(""))
+                throw new Exception("Not enough arguments");
+            return new Composition(parse(trimmed.substring(0, plusPos)), parse(trimmed.substring(plusPos + 1)), '+');
+        } else if (minusPos != -1) {
+            if (trimmed.substring(minusPos + 1).equals(""))
+                throw new Exception("Not enough arguments");
+            return new Composition(parse(trimmed.substring(0, minusPos)), parse(trimmed.substring(minusPos + 1)), '-');
         }
 
-        int multiplicationPos = findPosOperator(trimStr, '*');
-        if (multiplicationPos != -1) {
-            return new Composition(parse(trimStr.substring(0,multiplicationPos)), parse(trimStr.substring(multiplicationPos + 1)), '*');
+        int multPos = findPosOperator(trimmed, '*');
+        if (multPos != -1) {
+            if (trimmed.substring(0, multPos).equals("") || trimmed.substring(multPos + 1).equals(""))
+                throw new Exception("Not enough arguments");
+            return new Composition(parse(trimmed.substring(0, multPos)), parse(trimmed.substring(multPos + 1)), '*');
         }
 
-        int divisionPos = findPosOperator(trimStr, '/');
-        if (divisionPos != -1) {
-            return new Composition(parse(trimStr.substring(0, divisionPos)), parse(trimStr.substring(divisionPos + 1)), '/');
+        int divPos = findPosOperator(trimmed, '/');
+        if (divPos != -1) {
+            if (trimmed.substring(0, divPos).equals("") || trimmed.substring(divPos + 1).equals(""))
+                throw new Exception("Not enough arguments");
+            return new Composition(parse(trimmed.substring(0, divPos)), parse(trimmed.substring(divPos + 1)), '/');
         }
 
-        final int openBracketPos = trimStr.indexOf('(');
-        final int closeBracketPos = trimStr.lastIndexOf(')');
+        final int openBracketPos = trimmed.indexOf('(');
+        final int closeBracketPos = trimmed.lastIndexOf(')');
         if (openBracketPos != -1 && closeBracketPos != -1 && openBracketPos < closeBracketPos) {
-            return parse(trimStr.substring(openBracketPos + 1, closeBracketPos));
+            return parse(trimmed.substring(openBracketPos + 1, closeBracketPos));
         }
 
         if (openBracketPos == -1 && closeBracketPos == -1) {
-            if (isNumber(trimStr)) {
-                if (trimStr.equals(""))
+            if (isNumber(trimmed)) {
+                if (trimmed.equals(""))
                     return new Const(0);
-                return new Const(Double.parseDouble(trimStr));
+                return new Const(Double.parseDouble(trimmed));
             }
-            if ("x".equals(trimStr)) {
+            if ("x".equals(trimmed)) {
                 return new Var();
             }
-            throw new Exception("Syntax error!");
+            throw new Exception("Unexpected symbol!");
         }
         throw new Exception("Syntax error!");
     }
@@ -55,13 +63,13 @@ public class Parser {
         return true;
     }
 
-    private int findPosOperator(String trimStr, char op) throws Exception {
+    private static int findPosOperator(String trimmed, char op) {
         int index = 0;
         int pos;
         do {
-            pos = trimStr.indexOf(op, index);
-            index = getIndexLastClose(trimStr, pos);
-        } while (inBrackets(trimStr, pos));
+            pos = trimmed.indexOf(op, index);
+            index = getIndexLastClose(trimmed, pos);
+        } while (inBrackets(trimmed, pos));
         return pos;
     }
 
@@ -81,11 +89,11 @@ public class Parser {
         }
     }
 
-    private static int getIndexLastClose(String s, int i) throws Exception {
+    private static int getIndexLastClose(String s, int i) {
         if (i != -1) {
             int cOpen = 0;
             int cClose = 0;
-            for (int j = 0; j < i ; j++) {
+            for (int j = 0; j < i; j++) {
                 if (s.charAt(j) == '(')
                     cOpen++;
                 if (s.charAt(j) == ')')
@@ -94,14 +102,29 @@ public class Parser {
             int index = i;
             while (cOpen != cClose) {
                 index = s.indexOf(')', index + 1);
-                if (index != -1)
-                    cClose++;
-                else
-                    throw new Exception("Syntax error");
+                cClose++;
             }
             return index + 1;
-        }
-        else
+        } else
             return 0;
     }
-}
+
+    private static boolean correctBrackets(String s) {
+        int bracketsOpen = 0;
+        int bracketsClose = 0;
+        for (int i = 0; i < s.length(); ++i) {
+            switch (s.charAt(i)) {
+                case ('('): {
+                    bracketsOpen++;
+                    break;
+                }
+                case (')'): {
+                    bracketsClose++;
+                }
+            }
+            if (bracketsClose > bracketsOpen)
+                return false;
+        }
+        return (bracketsOpen == bracketsClose);
+    }
+ }
