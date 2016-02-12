@@ -5,6 +5,8 @@ package ru.spbstu.appmath.bykov;
 
 public class Parser {
     public Expression parse(final String s) throws Exception {
+        if (!correctBrackets(s))
+            throw new Exception("Wrong brackets");
         final String trimmed = s.trim();
 
         int plusPos = findPosOperator(trimmed, '+');
